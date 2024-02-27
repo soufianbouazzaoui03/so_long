@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:19:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/24 02:09:39 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/02/27 02:46:05 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,49 +42,27 @@ void	set_map(t_data *data)
 	}
 }
 
+
 void	set_texture(t_data *data, char c, int x, int y)
 {
-	void	*img;
-	int		height;
-	int		width;
 	
 	if (c == '0')
-	{
-		// img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[0], &width, &height);
-		// if(!img)
-		// 	exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, x, y);
-	}
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
 	else if (c == '1')
-	{
-		img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[1], &width, &height);
-		if(!img)
-			exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x, y);
-	}
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[1], x, y);
 	else if (c == 'C')
 	{
-		img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[2], &width, &height);
-		if(!img)
-			exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->gold_img[data->gold], x, y);
 	}
 	else if (c == 'E')
 	{
-		img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[3], &width, &height);
-		if(!img)
-			exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->gate_img[data->gate], x, y);
 	}
 	else if (c == 'P')
 	{
-		img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[0], &width, &height);
-		if(!img)
-			exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x, y);
-		img = mlx_xpm_file_to_image(data->mlx_ptr, data->textures[4], &width, &height);
-		if(!img)
-			exit(EXIT_FAILURE);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[data->player], x, y);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:18:23 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/23 22:28:42 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/02/27 02:47:40 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	stillcoins(char **map)
 
 void	handlemoves(char **map, char key)
 {
+	if(!map || !*map)
+		exit(EXIT_FAILURE);
 	if(key == 'D')
 		moveplayerD(map, stillcoins(map));
 	else if(key == 'A')

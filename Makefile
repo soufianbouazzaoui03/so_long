@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long
 LIBFT = "./libft/libft.a"
-SRC = so_long.c tools.c parsing2.c moves.c palyermoves.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
+SRC = so_long.c tools.c parsing2.c moves.c palyermoves.c animation.c checksegs.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
 OBJ = $(SRC:%.c=%.o)
 
 all : $(NAME)
