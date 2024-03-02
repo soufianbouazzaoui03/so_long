@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:31:54 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/27 02:40:08 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/02 21:07:22 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # include "./libft/libft.h"
 # include "./gnl/get_next_line.h"  
 
+typedef struct s_element
+{
+	int p;
+	int c;
+	int e;
+	int i;
+	int j;
+}	t_element;
+
 typedef struct s_map
 {
     int y;
@@ -30,26 +39,40 @@ typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	void		*img_ptr[6];
-	void		*textures[6];
+	void		*img_ptr[5];
 	void		*gate_img[9];
 	void		*gold_img[10];
+	void		*enemy_img[12];
 	char		**map;
 	int 		player;
 	int			gate;
 	int			gold;
+	int			enemy;
+	int			moves;
+	char		*moves_string;
 }	t_data;
 
 
 //PARSING:
-// int checker(const char *file);
-// int checklenght(const char *file);
-// int checkline(int fd);
-// int checkwall(const char *file);
-// int checkborder(const char *file);
-// int checkPE(const char *file, char c);
-// int checkforletters(const char *file);
-// int checkcoin(const char *file);
+void 	parsing(char **map, char *file);
+int 	checklastline(char *file);
+int		checklen(char **map);
+int		checkone(char **map);
+int		checkelement(char **map);
+int 	checkones(char **map, char *file);
+void 	floodfill(char **map, int i, int j);
+t_map 	get_player_pos(char **map);
+int		checkfor_c(char **map);
+
+
+
+void 	freemap(char **map);
+//void    free_imgs(t_data *data);
+void    free_data(t_data *data);
+void    free_all(t_data *data);
+void    ft_destroy_gold(t_data *data, int i);
+void    ft_destroy_gate(t_data *data, int i);
+void    ft_destroy_img(t_data *data, int i);
 
 
 //moves
@@ -61,20 +84,30 @@ void	moveplayerS(char **map, int iscoins);
 int 	ft_anime(t_data *data);
 int 	ft_anime_gold(t_data *data);
 int 	ft_anime_gate(t_data *data);
-
+int 	ft_anime_enemy(t_data *data);
 
 char	**get_map(char *file);
 t_map	map_demontion(char *file);
 int		stillcoins(char **map);
 
 int 	ft_close(int key, t_data *data);
+void 	exitwindow(t_data *data);
 
 void 	set_gold_imgs(t_data *data);
-void    *set_window(void *mlx, t_map map);
+void    *set_window(void *mlx, t_map map, t_data *data);
 void	set_map(t_data *data);
 void	set_texture(t_data *data, char c, int x, int y);
+void	set_enemy_imgs(t_data *data);
 
+void    check_gold_imgs(t_data *data, int ex);
+void    check_gate_imgs(t_data *data, int ex);
+void    check_ptr_imgs(t_data *data, int ex);
 
-void    checkimgs(t_data *data);
+int	enemy_moves(t_data *data);
+int	move_D(t_data *data, int i, int j);
+int	move_A(t_data *data, int i, int j);
+int	move_W(t_data *data, int i, int j);
+int	move_S(t_data *data, int i, int j);
+
 
 #endif

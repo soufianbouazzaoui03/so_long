@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 00:06:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/27 02:29:18 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/02 20:57:51 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int ft_anime_gate(t_data *data)
     return (0);
 }
 
-
 void    set_gold_imgs(t_data *data)
 {
     int w;
@@ -47,6 +46,7 @@ void    set_gold_imgs(t_data *data)
     data->gold_img[7] = mlx_xpm_file_to_image(data->mlx_ptr, "gold/8.xpm", &w, &h);
     data->gold_img[8] = mlx_xpm_file_to_image(data->mlx_ptr, "gold/9.xpm", &w, &h);
     data->gold_img[9] = mlx_xpm_file_to_image(data->mlx_ptr, "gold/10.xpm", &w, &h);
+    check_gold_imgs(data, 1);
 }
 int ft_anime_gold(t_data *data)
 {
@@ -62,5 +62,22 @@ int ft_anime_gold(t_data *data)
         j = 0;
     }
     j++;
+    return (0);
+}
+
+int ft_anime_enemy(t_data *data)
+{
+    static int i;
+    
+    if(i == 800)
+    {
+        mlx_clear_window(data->mlx_ptr, data->win_ptr);
+        set_map(data);
+        data->enemy++;
+        if(data->enemy == 11)
+            data->enemy = 0;
+        i = 0;
+    }
+    i++;  
     return (0);
 }

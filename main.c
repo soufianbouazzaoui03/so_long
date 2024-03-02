@@ -22,11 +22,11 @@ void	put_bg(void *img, void *window, void *mlx, int *width, int	*heigh)
 	int y = 0;
 	int i;
 
-	while(x < 640)
-	{
+	//while(x < 640)
+	//{
 		mlx_put_image_to_window(mlx, window, img, x, y);
 		x += *width;
-	}
+	//}
 }
 
 int	main(void)
@@ -53,5 +53,8 @@ int	main(void)
 
 	put_bg(img, window, mlx, &img_width, &img_height);
 	mlx_key_hook(window, key_hook, mlx);
+	//mlx_string_put(mlx, window, 1 * 31, 20, 0xFF2FFF, "test");
+	mlx_put_image_to_window(mlx, window, img, 31, 20);
+	mlx_string_put(mlx, window, 1 * 31, 20, 0xFF2FFF, "test");
 	mlx_loop(mlx);
 }

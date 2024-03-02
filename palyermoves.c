@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 21:01:43 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/24 19:18:34 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/02/28 02:33:31 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	moveplayerD(char **map, int iscoins)
                     map[i][j + 1] = 'P';
                     return ;
             }
-            else if (map[i][j] == 'P' && iscoins == 0 && map[i][j + 1] == 'E')
+            else if (map[i][j] == 'P' && (map[i][j + 1] == 'N' || (iscoins == 0 && map[i][j + 1] == 'E')))
             {
                 map[i][j] = '0';
                 map[i][j + 1] = 'X';
@@ -56,7 +56,7 @@ void	moveplayerA(char **map, int iscoins)
                     map[i][j - 1] = 'P';
                     return ;
             }
-            else if (map[i][j] == 'P' && iscoins == 0 && map[i][j - 1] == 'E')
+            else if (map[i][j] == 'P' && (map[i][j - 1] == 'N' || (iscoins == 0 && map[i][j - 1] == 'E')))
             {
                 map[i][j] = '0';
                 map[i][j - 1] = 'X';
@@ -83,7 +83,7 @@ void	moveplayerW(char **map, int iscoins)
                     map[i - 1][j] = 'P';
                     return ;
             }
-            else if (map[i][j] == 'P' && iscoins == 0 && map[i - 1][j] == 'E')
+            else if (map[i][j] == 'P' && (map[i - 1][j] == 'N' || (iscoins == 0 && map[i - 1][j] == 'E')))
             {
                 map[i][j] = '0';
                 map[i - 1][j] = 'X';
@@ -110,7 +110,7 @@ void	moveplayerS(char **map, int iscoins)
                     map[i + 1][j] = 'P';
                     return ;
             }
-            else if (map[i][j] == 'P' && iscoins == 0 && map[i + 1][j] == 'E')
+            else if (map[i][j] == 'P' && (map[i + 1][j] == 'N' || (iscoins == 0 && map[i + 1][j] == 'E')))
             {
                 map[i][j] = '0';
                 map[i + 1][j] = 'X';

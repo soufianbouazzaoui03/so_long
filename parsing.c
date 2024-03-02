@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:27:45 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/22 20:49:42 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/02 19:06:59 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*removen(char *line)
 	{
 		newline = malloc(sizeof(char) * len - 1);
 		if(!newline)
-			return (NULL);
+			return (free(line), NULL);
 		while(i < len)
 		{
 			newline[i] = line[i];
@@ -92,7 +92,6 @@ int checklenght(const char *file)
 		return(1);
 	line = get_next_line(fd);
 	line = removen(line);
-	printf("%s", line);
 	if (!line)
 		return (close(fd), 1);
 	len = ft_strlen(line);

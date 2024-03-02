@@ -6,11 +6,47 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 23:53:21 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/24 01:54:26 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/02 22:49:34 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void freemap(char **map)
+{
+	int i;
+
+	i = 0;
+	while(map[i])
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+void parsing(char **map, char *file)
+{
+	char **mapcpy;
+
+	if (checklen(map))
+		return (freemap(map), exit(EXIT_FAILURE));
+	if (checklastline(file))
+		exit(EXIT_FAILURE);
+	if (checkelement(map))
+		return (freemap(map), exit(EXIT_FAILURE));
+	if (checkones(map, file))
+		return (freemap(map), exit(EXIT_FAILURE));
+	if (checkone(map))
+		return (freemap(map), exit(EXIT_FAILURE));
+	mapcpy = get_map(file);
+	if (checkfor_c(mapcpy))
+	{
+		freemap(mapcpy);
+		return (freemap(map), exit(EXIT_FAILURE));
+	}
+	freemap(mapcpy);
+}
 
 t_map	map_demontion(char *file)
 {
@@ -19,100 +55,67 @@ t_map	map_demontion(char *file)
 	int		fd;
 	
 	fd = open(file, O_RDONLY);
-	if(fd < 0)
+	if(fd < 0) 
 		exit(EXIT_FAILURE);
-	// demontion = malloc(sizeof(t_map));
-	// if(!demontion)
-	// 	exit(EXIT_FAILURE);
-	line = get_next_line(fd);
-	if (!line)
-		exit(EXIT_FAILURE);
-	demontion.x = ft_strlen(line) - 1;
-	demontion.y = 1;
-	while (1)
+	if (!(line = get_next_line(fd)) || !line[1])
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
+		if(!line[1])
+			free(line);
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	demontion.x = ft_strlen(line) - 1;
+	demontion.y = 0;
+	free(line);
+	while ((line = get_next_line(fd)))
+	{
 		demontion.y++;
 		free(line);
 	}
-	return (close(fd), demontion);
+	return (free(line), close(fd), demontion);
 }
 
-char	*removen(char *line)
+int checklastline(char *file)
 {
-	char	*newline;
-	int 	len;
-	int		i;
-
-	i = 0;
-	if(!line)
-		return (NULL);
-	len = ft_strlen(line);
-	if(len < 2)
-		return (line);
-	if(line[len - 1] == '\n')
-	{
-		newline = (char *)malloc(sizeof(char) * (len - 1));
-		if(!newline)
-			return (NULL);
-		while(line[i] != '\n' && line[i])
-		{
-			newline[i] = line[i];
-			i++;
-		}
-		newline[i] = '\0';
-		free(line);
-		return (newline);
-	}
-	return (line);
-}
-
-
-// void	freelist(char **list, int size)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(i < size)
-// 		free(list[i++]);
-// 	free(list);
-// }
-
-char	**get_map(char *file)
-{
-	int		fd;
-	char	**map;
+	int 	y;
 	char	*line;
-	int		i;
+	int 	fd;
+	int i;
 
-	fd = open(file, O_RDONLY);
 	i = 0;
+	fd = open(file, O_RDONLY);
 	if(fd < 0)
-		exit(EXIT_FAILURE);
-	map = (char **)malloc(sizeof(char *) * (map_demontion(file).y + 1));
-	if(!map)
-		return (close(fd), exit(EXIT_FAILURE), NULL);
+		return (1);	
+	y = map_demontion(file).y;
 	while(1)
 	{
 		line = get_next_line(fd);
-		if(!line)
+		if(y == 0)
 			break;
-		map[i++] = removen(line);
+		else
+			free(line);
+		y--;
 	}
-	map[i] = NULL;
-	return (close(fd), map);
+	while(line[i])
+	{
+		if(line[i++] == '\n')
+			return(free(line), close(fd), 1);
+	}
+	return (free(line), close(fd), 0);
 }
 
 int		checklen(char **map)
 {
-	int i;
+	int 	i;
+	size_t 	le;
 
+	if (!map || !*map)
+		return (1);
+	le = ft_strlen(map[1]);
 	i = 0;
-	while(map[i] && map[i + 1])
+	while (map[i])
 	{
-		if(ft_strlen(map[i]) != ft_strlen(map[i + 1]))
+		if (ft_strlen(map[i]) != le)
 			return (1);
 		i++;
 	}
@@ -121,13 +124,14 @@ int		checklen(char **map)
 
 int	checkone(char **map)
 {
-	//call after checking all line in map are equales.
 	int i;
 
 	i = 0;
-	while(map[i])
+	if (!map || !*map)
+		return (1);
+	while (map[i])
 	{
-		if(map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
+		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
 			return (1);
 		i++;
 	}
@@ -136,57 +140,67 @@ int	checkone(char **map)
 
 int checkelement(char **map)
 {
-	int i;
-	int j;
-	int p;
-	int e;
-	int c;
+	t_element elem;
 
-	i = 0;
-	p = 0;
-	c = 0;
-	e = 0;
-	while(map[i])
+	elem.e = 0;
+	elem.c = 0;
+	elem.i = -1;
+	elem.p = 0;
+	while(map[++elem.i])
 	{
-		j = 0;
-		while(map[i][j])
+		elem.j = -1;
+		while(map[elem.i][++elem.j])
 		{
-			if(map[i][j] == 'C')
-				c++;
-			else if(map[i][j] == 'P')
-				p++;
-			else if(map[i][j] == 'E')
-				e++;
-			else if(map[i][j] != '1' && map[i][j] != '0')
+			if(map[elem.i][elem.j] == 'C')
+				elem.c++;
+			else if(map[elem.i][elem.j] == 'P')
+				elem.p++;
+			else if(map[elem.i][elem.j] == 'E')
+				elem.e++;
+			else if(map[elem.i][elem.j] != '1' && map[elem.i][elem.j] != '0' 
+					&& map[elem.i][elem.j] != '\n' && map[elem.i][elem.j] != 'N')
 				return (1);
-			j++;
 		}
-		i++;
 	}
-	if(c < 1 || p != 1 || e != 1)
+	if(elem.c < 1 || elem.p != 1 || elem.e != 1)
 			return (1);
 	return (0);
 }
 
-void printmap(char **map)
+int checkones(char **map, char *file)
 {
-	int i;
+	int y;
+	int	i;
 
 	i = 0;
-	printf("---------------------\n");
-	while(map[i])
+	y = map_demontion(file).y;
+	while (map[0][i] && map[y][i])
 	{
-		printf("%s\n", map[i]);
-		i++;
+		if (map[0][i] != '1' || map[y][i++] != '1')
+			return (1);
 	}
+	return (0);
 }
+
+// void printmap(char **map)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	printf("---------------------\n");
+// 	while(map[i])
+// 	{
+// 		printf("%s\n", map[i]);
+// 		i++;
+// 	}
+// }
 
 // int main()
 // {
+// 	int i = 14;
+// 	int j = 3;
 // 	char **map;
 
-// 	map = get_map("maps.txt");
-// 	printmap(map);
-// 	moveplayerS(map, 0);
-// 	printmap(map);
+// 	map = get_map("maps.ber");
+// 	printf("%d", checkone(map));
 // }

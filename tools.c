@@ -6,20 +6,31 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:19:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/27 02:46:05 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/02 21:06:08 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void    *set_window(void *mlx, t_map map)
+void    *set_window(void *mlx, t_map map, t_data *data)
 {
     void    *win;
 
-    win = mlx_new_window(mlx, map.x * 64, map.y * 64, "so_long");
+    win = mlx_new_window(mlx, map.x * 64, (map.y + 1) * 64, "so_long");
     if (!win)
+	{
+		freemap(data->map);
         exit(EXIT_FAILURE);
+	}
     return (win);
+}
+
+void putmssg(t_data *data)
+{
+	free(data->moves_string);
+	data->moves_string = ft_itoa(data->moves);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, 2, 0xFFFFFFFF, data->moves_string);
+
 }
 
 void	set_map(t_data *data)
@@ -30,6 +41,7 @@ void	set_map(t_data *data)
 
 	i = 0;
 	map = data->map;
+	mlx_clear_window(data->map, data->win_ptr);
 	while(map[i])
 	{
 		j = 0;
@@ -40,12 +52,12 @@ void	set_map(t_data *data)
 		}
 		i++;
 	}
+	putmssg(data);
 }
 
 
 void	set_texture(t_data *data, char c, int x, int y)
 {
-	
 	if (c == '0')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
 	else if (c == '1')
@@ -59,6 +71,11 @@ void	set_texture(t_data *data, char c, int x, int y)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->gate_img[data->gate], x, y);
+	}
+	else if (c == 'N')
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[0], x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr[2], x, y);
 	}
 	else if (c == 'P')
 	{
