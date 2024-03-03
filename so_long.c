@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:12:29 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 21:38:56 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:10:48 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,47 +35,12 @@ void exitwindow(t_data *data)
     }
 }
 
-void moveshandler(t_data *data, char move)
-{
-    data->moves++;
-    handlemoves(data->map, move);
-    if (move == 'A')
-    {
-        data->player = 4;
-        mlx_clear_window(data->mlx_ptr, data->win_ptr);
-        set_map(data);
-    }
-    if (move == 'D')
-    {
-        data->player = 3;
-        mlx_clear_window(data->mlx_ptr, data->win_ptr);
-        set_map(data);
-    }
-    else
-    {
-        mlx_clear_window(data->mlx_ptr, data->win_ptr);
-        set_map(data);
-    }
-}
-
-
-int ft_anime(t_data *data)
-{
-    ft_anime_gate(data);
-    ft_anime_gold(data);
-    //ft_anime_enemy(data);
-    enemy_moves(data);
-    return (0);
-}
-
-
 int ft_close(int key, t_data *data)
 {
     if (key == 53)
     {
         mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-        //free_all(data);
-        free(data->mlx_ptr);
+        free_all(data);
         exit(0);
     }
     if (key == 2 || key == 124)

@@ -6,45 +6,30 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 16:46:41 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 20:36:32 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:17:04 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void    ft_destroy_gold(t_data *data, int i)
+void freemap(char **map)
 {
-    while(i >= 0)
-    {
-        mlx_destroy_image(data->mlx_ptr, data->gold_img[i]);
-        i--;
-    }
-}
-void    ft_destroy_gate(t_data *data, int i)
-{
-    while(i >= 0)
-    {
-        mlx_destroy_image(data->mlx_ptr, data->gate_img[i]);
-        i--;
-    }
-}
-void    ft_destroy_img(t_data *data, int i)
-{
-    while(i >= 0)
-    {
-        mlx_destroy_image(data->mlx_ptr, data->img_ptr[i]);
-        i--;
-    }
-}
+	int i;
 
-void    free_data(t_data *data)
-{
-    freemap(data->map);
-    free(data->moves_string);
+	i = 0;
+	while(map[i])
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
 }
 
 void    free_all(t_data *data)
 {
-    //free_imgs(data);
-    free_data(data);
+    freemap(data->map);
+    free(data->moves_string);
+    ft_destroy_gate(data, 8);
+    ft_destroy_gold(data, 9);
+    ft_destroy_img(data, 4);
 }

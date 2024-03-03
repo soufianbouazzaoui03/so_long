@@ -6,12 +6,20 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 00:06:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 20:57:51 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:27:35 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+int ft_anime(t_data *data)
+{
+    ft_anime_gate(data);
+    ft_anime_gold(data);
+    //ft_anime_enemy(data);
+    //enemy_moves(data);
+    return (0);
+}
 
 int ft_anime_gate(t_data *data)
 {

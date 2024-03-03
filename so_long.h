@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:31:54 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 21:07:22 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:16:59 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int		checkfor_c(char **map);
 
 
 void 	freemap(char **map);
-//void    free_imgs(t_data *data);
-void    free_data(t_data *data);
 void    free_all(t_data *data);
 void    ft_destroy_gold(t_data *data, int i);
 void    ft_destroy_gate(t_data *data, int i);
@@ -77,6 +75,7 @@ void    ft_destroy_img(t_data *data, int i);
 
 //moves
 void	handlemoves(char **map, char key);
+void	moveshandler(t_data *data, char move);
 void	moveplayerD(char **map, int iscoins);
 void	moveplayerA(char **map, int iscoins);
 void	moveplayerW(char **map, int iscoins);

@@ -6,11 +6,34 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 20:18:23 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/02/27 02:47:40 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:13:45 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	moveshandler(t_data *data, char move)
+{
+    data->moves++;
+    handlemoves(data->map, move);
+    if (move == 'A')
+    {
+        data->player = 4;
+        mlx_clear_window(data->mlx_ptr, data->win_ptr);
+        set_map(data);
+    }
+    if (move == 'D')
+    {
+        data->player = 3;
+        mlx_clear_window(data->mlx_ptr, data->win_ptr);
+        set_map(data);
+    }
+    else
+    {
+        mlx_clear_window(data->mlx_ptr, data->win_ptr);
+        set_map(data);
+    }
+}
 
 int	stillcoins(char **map)
 {
