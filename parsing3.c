@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:12:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 15:13:21 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 22:21:59 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int checklastline(char *file)
 
 	i = 0;
 	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return (1);	
-	y = map_demontion(file).y;
+	if(fd < 0 || (y = map_demontion(file).y) == 0)
+		return (1);
 	while(1)
 	{
 		line = get_next_line(fd);
@@ -33,7 +32,7 @@ int checklastline(char *file)
 			free(line);
 		y--;
 	}
-	while(line[i])
+	while(line && line[i])
 	{
 		if(line[i++] == '\n')
 			return(free(line), close(fd), 1);
@@ -95,7 +94,7 @@ int checkelement(char **map)
 			else if(map[elem.i][elem.j] == 'E')
 				elem.e++;
 			else if(map[elem.i][elem.j] != '1' && map[elem.i][elem.j] != '0' 
-					&& map[elem.i][elem.j] != '\n' && map[elem.i][elem.j] != 'N')
+					 && map[elem.i][elem.j] != 'N')
 				return (1);
 		}
 	}

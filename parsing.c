@@ -5,279 +5,126 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 21:27:45 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 19:06:59 by soel-bou         ###   ########.fr       */
+/*   Created: 2024/03/03 20:06:08 by soel-bou          #+#    #+#             */
+/*   Updated: 2024/03/03 23:32:50 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int checker(const char *file) {
-    if (!file)
-        return 1;
-
-    if (checklenght(file)) {
-		printf("here1");
-        return 1;
-    }
-
-    if (checkwall(file)) {
-		printf("here2");
-        return 1;
-    }
-
-    if (checkborder(file)) {
-		printf("here3");
-        return 1;
-    }
-
-    if (checkforletters(file)) {
-		printf("here4");
-        return 1;
-    }
-
-    if (checkPE(file, 'C')) {
-		printf("here5");
-        return 1;
-    }
-
-    if (checkPE(file, 'P')) {
-		printf("here6");
-        return 1;
-    }
-
-    if (checkcoin(file)) {
-		printf("here7");
-        return 1;
-    }
-
-    return 0;
-}
-
-char	*removen(char *line)
+void	parsnew_line(char *line)
 {
-	char	*newline;
-	int 	len;
-	int		i;
+	int	i;
 
 	i = 0;
-	if(!line)
-		return (NULL);
-	len = ft_strlen(line);
-	if(line[len] == '\n')
+	if (line[0] == '\n')
+		exit_free_line(line);
+	while (line[i] && line[i + 1])
 	{
-		newline = malloc(sizeof(char) * len - 1);
-		if(!newline)
-			return (free(line), NULL);
-		while(i < len)
-		{
-			newline[i] = line[i];
-			i++;
-		}
-		line[i] = '\0';
-		free(line);
-		return (newline);
-	}
-	return (line);
-}
-
-int checklenght(const char *file)
-{
-	int		fd;
-	char	*line;
-	int		len;
-	
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	line = get_next_line(fd);
-	line = removen(line);
-	if (!line)
-		return (close(fd), 1);
-	len = ft_strlen(line);
-	while(1)
-	{
-		line = get_next_line(fd);
-		line = removen(line);
-		if(!line)
-			break ;
-		if (ft_strlen(line) != (size_t)len)
-			return (free(line), close(fd), 1);
-		free(line);
-	}
-	return (close(fd), 0);
-}
-
-int	checkline(int fd)
-{
-	char	*line;
-	size_t 	i;
-
-	i = 0;
-	line = get_next_line(fd);
-	line = removen(line);
-	if(!line)
-		return (1);
-	while(line[i] && i < ft_strlen(line))
-	{
-		if(line[i] != '1')
-			return (free(line), close(fd), 1);
+		if (line[i] == '\n' && line[i + 1] == '\n')
+			exit_free_line(line);
 		i++;
 	}
-	return (free(line),close(fd), 0);
+	if (line[i] == '\n')
+		exit_free_line(line);
 }
 
-int checkwall(const char *file)
+void	pars_element(char *line)
 {
-	int		fd;
-	int		last;
-	char	*line;
+	int 		i;
+	int	p = 0;
+	int	e = 0;
+	int	c = 0;
 
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	if (checkline(fd))
-		return (1);
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	last = map_demontion(fd)->y - 1;
-	close(fd);
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	while(last--)
+	i = 0;
+	while (line[i])
 	{
-		line = get_next_line(fd);
-		free(line);
+		if((line[i] != '0' && line[i] != '1' && line[i] != 'E' && line[i] != 'C' && line[i] != 'P' && line[i] != 'N'  && line[i] != '\n'))
+			exit_free_line(line);
+		if (line[i] == 'E')
+			e++;
+		else if (line[i] == 'C')
+			c++;
+		else if (line[i] == 'P')
+			p++;
+		i++;
 	}
-	if (checkline(fd))
-		return (1);
-	return (0);
+	if (e != 1 || p != 1 || c < 1)
+		exit_free_line(line);
 }
 
-int checkborder(const char *file)
+void	check_ones(char **map)
 {
-	int		fd;
-	char	*line;
+	int	i;
+	int	j;
 
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	while(1)
+	i = 0;
+	j = 0;
+	while (map[0][i])
 	{
-		line = get_next_line(fd);
-		line = removen(line);
-		if (!line)
-			break ;
-		if (line[0] != '1' || line[ft_strlen(line) - 1] != '1')
-			return (free(line), close(fd), 1);
-		free(line);
+		if(map[0][i++] != '1')
+			exit_free(map);
 	}
-	return (close(fd), 0);
+	i = 0;
+	while (map[i])
+		i++;
+	while (map[i - 1][j])
+	{
+		if(map[i - 1][j] != '1')
+			exit_free(map);
+		j++;
+	}
+}
+void	check_argv(char *map)
+{
+	int i;
+	
+	if (!map)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (map[i])
+		i++;
+	if (ft_strncmp(&map[i - 4], ".ber", 4))
+		exit(EXIT_FAILURE);
 }
 
-int	checkPE(const char *file , char c)
+void	checkfor_c(char **map)
 {
-	int		fd;
-	char	*line;
-	int		mark;
+	int i;
+	int j;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return(1);
-	mark = 0;
-	while (1)
+	i = get_player_pos(map).y;
+	j = get_player_pos(map).x;
+	floodfill(map, i, j);
+	i = 0;
+	while(map[i])
 	{
-		line = get_next_line(fd);
-		line = removen(line);
-		if (!line)
-			break ;
-		while (*line)
+		j = 0;
+		while(map[i][j])
 		{
-			if (*line == c && mark == 0)
-				mark++;
-			else if (*line == c && mark > 0)
-				return (free(line), close(fd), 1);
-			line++;
+			if(map[i][j] == 'C' || map[i][j] == 'E')
+				exit_free(map);
+			j++;
 		}
-		free(line);
+		i++;
 	}
-	return (close(fd), 0);
 }
+// void	f()
+// {
+// 	system("leaks a.out");
+// }
 
-int checkforletters(const char *file)
-{
-	int		fd;
-	char	*line;
+// int main()
+// {
+// 	int i = 0;
+// 	char *line;
 
-	fd = open(file, O_RDONLY);
-	if(fd < 0)
-		return(1);
-	while (1)
-	{
-		line = get_next_line(fd);
-		line = removen(line);
-		if (!line)
-			break ;
-		while (*line)
-		{
-			if (*line != '1' || *line != '0' || *line != 'E' || *line != 'P' || *line != 'C')
-				return (free(line), close(fd), 1);
-			line++;
-		}
-		free(line);
-	}
-	return (close(fd), 0);
-}
-int	checkcoin(const char *file)
-{
-	int		fd;
-	char	*line;
-	int		mark;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return(1);
-	mark = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		line = removen(line);
-		if (!line)
-			break ;
-		while (*line)
-		{
-			if (*line == 'C')
-				mark++;
-			line++;
-		}
-		free(line);
-	}
-	if(mark < 1)
-		return (close(fd), 1);
-	return (close(fd), 0);
-}
-
-int main()
-{
-	int fd = open("maps.txt", O_RDONLY);
-	char *line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-	line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-	line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-	line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-	line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-	line = get_next_line(fd);
-	line = removen(line);
-	printf("%s", line);
-}
+// 	atexit(f);
+// 	line = get_map_line("maps.ber");
+// 	parsnew_line(line);
+// 	pars_element(line);
+// 	char **map = get_map2(line);
+// 	while(map[i])
+// 	printf("%s\n", map[i++]);
+// 	freemap(map);
+// }

@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:31:54 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 16:16:59 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 23:36:32 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef struct s_data
 }	t_data;
 
 
+//parsing2
+void	parsnew_line(char *line);
+void	pars_element(char *line);
+void	check_ones(char **map);
+char	*get_map_line(char *file);
+char	**get_map(char *file);
+t_map	map_demontion(t_data *data);
+
 //PARSING:
 void 	parsing(char **map, char *file);
 int 	checklastline(char *file);
@@ -62,10 +70,12 @@ int		checkelement(char **map);
 int 	checkones(char **map, char *file);
 void 	floodfill(char **map, int i, int j);
 t_map 	get_player_pos(char **map);
-int		checkfor_c(char **map);
+void		checkfor_c(char **map);
+void	check_argv(char *map);
 
 
-
+void	exit_free(char **map);
+void	exit_free_line(char *line);
 void 	freemap(char **map);
 void    free_all(t_data *data);
 void    ft_destroy_gold(t_data *data, int i);
@@ -85,8 +95,8 @@ int 	ft_anime_gold(t_data *data);
 int 	ft_anime_gate(t_data *data);
 int 	ft_anime_enemy(t_data *data);
 
-char	**get_map(char *file);
-t_map	map_demontion(char *file);
+//char	**get_map(char *file);
+//t_map	map_demontion(char *file);
 int		stillcoins(char **map);
 
 int 	ft_close(int key, t_data *data);

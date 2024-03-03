@@ -6,11 +6,24 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:12:29 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 16:10:48 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/03 23:40:22 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void printmap(char **map)
+{
+	int i;
+
+	i = 0;
+	printf("---------------------\n");
+	while(map[i])
+	{
+		printf("%s\n", map[i]);
+		i++;
+	}
+}
 
 void exitwindow(t_data *data)
 {
@@ -92,22 +105,23 @@ void f()
 {
     system("leaks so_long");
 }
-int main()
+int main(int argc, char **argv)
 {
     t_data data;
     atexit(f);
-    data.mlx_ptr = mlx_init();
-    if (!data.mlx_ptr)
-        exit(EXIT_FAILURE);
-    data.map = get_map("maps.ber");
-    if (!data.map)
-        exit(EXIT_FAILURE);
-    parsing(data.map, "maps.ber");
-    data.win_ptr = set_window(data.mlx_ptr, map_demontion("maps.ber"), &data);
-    set_img_ptr(&data);
-    set_map(&data);
-    mlx_hook(data.win_ptr, 2, 0, ft_close, &data);
-    mlx_loop_hook(data.mlx_ptr, ft_anime, &data);
-    mlx_loop(data.mlx_ptr);
+    if(argc == 2)
+    {
+        check_argv(argv[1]);
+        data.mlx_ptr = mlx_init();
+        if (!data.mlx_ptr)
+            exit(EXIT_FAILURE);
+        data.map = get_map(argv[1]);
+        data.win_ptr = set_window(data.mlx_ptr, map_demontion(&data), &data);
+        set_img_ptr(&data);
+        set_map(&data);
+        mlx_hook(data.win_ptr, 2, 0, ft_close, &data);
+        mlx_loop_hook(data.mlx_ptr, ft_anime, &data);
+        mlx_loop(data.mlx_ptr);   
+    }
     return (0);
 }
