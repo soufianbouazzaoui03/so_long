@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:19:40 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/02 21:06:08 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:12:02 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    *set_window(void *mlx, t_map map, t_data *data)
 {
     void    *win;
 
-    win = mlx_new_window(mlx, map.x * 64, (map.y + 1) * 64, "so_long");
+    win = mlx_new_window(mlx, map.x * 64, (map.y) * 64, "so_long");
     if (!win)
 	{
 		freemap(data->map);

@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:12:29 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 23:40:22 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:07:36 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void set_img_ptr(t_data *data)
     data->gate_img[8] = mlx_xpm_file_to_image(data->mlx_ptr, "water/9.xpm", &w, &h);
     check_gate_imgs(data, 1);
 }
+
 void f()
 {
     system("leaks so_long");

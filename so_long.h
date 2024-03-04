@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:31:54 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 23:36:32 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:15:04 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "./libft/libft.h"
-# include "./gnl/get_next_line.h"  
+# include "./gnl/get_next_line.h"
 
 typedef struct s_element
 {
@@ -52,7 +52,6 @@ typedef struct s_data
 	char		*moves_string;
 }	t_data;
 
-
 //parsing2
 void	parsnew_line(char *line);
 void	pars_element(char *line);
@@ -70,7 +69,7 @@ int		checkelement(char **map);
 int 	checkones(char **map, char *file);
 void 	floodfill(char **map, int i, int j);
 t_map 	get_player_pos(char **map);
-void		checkfor_c(char **map);
+int		checkfor_c(char **map);
 void	check_argv(char *map);
 
 

@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 20:06:08 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 23:32:50 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:17:40 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	check_argv(char *map)
 		exit(EXIT_FAILURE);
 }
 
-void	checkfor_c(char **map)
+int	checkfor_c(char **map)
 {
 	int i;
 	int j;
@@ -103,11 +103,12 @@ void	checkfor_c(char **map)
 		while(map[i][j])
 		{
 			if(map[i][j] == 'C' || map[i][j] == 'E')
-				exit_free(map);
+				return (1);
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 // void	f()
 // {

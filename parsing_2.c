@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 22:31:56 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 23:46:14 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:17:59 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_map_line(char *file)
 	int		fd;
 
 	map_line = ft_strdup("");
+	if(!map_line)
+		exit(1);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		exit(EXIT_FAILURE);
@@ -58,14 +60,23 @@ char	**get_map_from_line(char *line)
 }
 char	**get_map(char *file)
 {
-	char *line;
-	char **map;
+	char 	*line;
+	char	*line2;
+	char 	**map;
+	char	**mapcpy;
 	
 	line = get_map_line(file);
 	parsnew_line(line);
 	pars_element(line);
 	map = get_map_from_line(line);
-	checkfor_c(map);
+	line2 = get_map_line(file);
+	mapcpy = get_map_from_line(line2);
+	if (checkfor_c(mapcpy))
+	{
+		freemap(mapcpy);
+		exit_free(map);
+	}
+	freemap(mapcpy);
 	return (map);
 }
 
