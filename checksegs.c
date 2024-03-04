@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 02:31:41 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/03 16:12:53 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:29:36 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_gold_imgs(t_data *data, int ex)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 10)
@@ -23,11 +23,14 @@ void	check_gold_imgs(t_data *data, int ex)
 		{
 			ft_destroy_gold(data, i - 1);
 			freemap(data->map);
+			if (ex == 1)
+				ft_putstr_fd("MLX_IMG_ERROR\n", 2);
 			exit(ex);
 		}
 		i++;
 	}
 }
+
 void	check_gate_imgs(t_data *data, int ex)
 {
 	int	i;
@@ -40,12 +43,14 @@ void	check_gate_imgs(t_data *data, int ex)
 			ft_destroy_gold(data, 9);
 			ft_destroy_img(data, 4);
 			ft_destroy_gate(data, i - 1);
+			if (ex == 1)
+				ft_putstr_fd("MLX_IMG_ERROR\n", 2);
 			exit(ex);
 		}
 		i++;
 	}
-	
 }
+
 void	check_ptr_imgs(t_data *data, int ex)
 {
 	int	i;
@@ -55,9 +60,10 @@ void	check_ptr_imgs(t_data *data, int ex)
 	{
 		if (!data->img_ptr[i])
 		{
-			printf("%d", i);
 			ft_destroy_gold(data, 9);
 			ft_destroy_img(data, i - 1);
+			if (ex == 1)
+				ft_putstr_fd("MLX_IMG_ERROR\n", 2);
 			exit(ex);
 		}
 		i++;
