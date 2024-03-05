@@ -6,7 +6,7 @@
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:12:29 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/04 20:34:15 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:43:41 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,11 @@ int	main(int argc, char **argv)
 		set_img_ptr(&data);
 		set_map(&data);
 		mlx_hook(data.win_ptr, 2, 0, ft_close, &data);
+		mlx_hook(data.win_ptr, 17, 0, close_win, &data);
 		mlx_loop_hook(data.mlx_ptr, ft_anime, &data);
 		mlx_loop(data.mlx_ptr);
 	}
 	else
-	{
-		ft_putstr_fd("INVALID ARGS!\n", 2);
-		exit(1);
-	}
+		return (ft_putstr_fd("INVALID ARGS!\n", 2), 1);
 	return (0);
 }

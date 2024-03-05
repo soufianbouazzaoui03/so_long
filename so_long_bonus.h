@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soel-bou <soel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:31:54 by soel-bou          #+#    #+#             */
-/*   Updated: 2024/03/04 20:04:16 by soel-bou         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:38:53 by soel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -64,6 +64,7 @@ t_map	get_player_pos(char **map);
 int		checkfor_c(char **map);
 void	check_argv(char *map);
 
+int		close_win(t_data *data);
 void	exit_free(char **map);
 void	exit_free_line(char *line);
 void	freemap(char **map);
